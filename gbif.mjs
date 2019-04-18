@@ -5,10 +5,13 @@ export async function getGBIFIDFromQuery(q) {
   const response = await fetch('https://api.gbif.org/v1/species/suggest?q=' + urlEncodedQuery);
   const json = await response.json();
 
-  const results = json.
-    filter(item => item.rank === 'SPECIES').
-    filter(item => !item.synonym).
-    sort((a, b) => {
+  const isSpecies = item => item.rank === 'SPECIES';
+  const notSynonym = item => !item.synonym;
+
+  const results = json
+    .filter(isSpecies)
+    .filter(notSynonym)
+    .sort((a, b) => {
       if (a.status === 'ACCEPTED') {
         return -1;
       }
