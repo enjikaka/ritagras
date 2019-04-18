@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import ArtdatabankenAPI from './artdatabanken.mjs';
+import { getGBIFIDFromQuery } from './gbif.mjs';
 import { landscapeTypes, status, capitalize } from './text-generator.mjs';
 
 const dotenvResult = dotenv.config();
@@ -13,16 +14,25 @@ const { parsed: config } = dotenvResult;
 const artdatabankenApi = new ArtdatabankenAPI(config['ARTDATABANKEN_API_KEY']);
 
 async function init() {
-  const result = await artdatabankenApi.speciesInformation('Achillea millefolium');
+  const scientificName = 'Achillea millefolium';
+  const artdatabankenFetch = artdatabankenApi.speciesInformation(scientificName);
+  const gbifFetch = getGBIFIDFromQuery(scientificName);
+
+  const artdatabankenResult = await artdatabankenFetch;
+  const gbifKey = await gbifFetch;
 
   console.log(`
-  # ${capitalize(result.swedishName)}
+---
+title: "${capitalize(artdatabankenResult.swedishName)}"
+subtitle: "${artdatabankenResult.scientificName}"
+gbif: ${gbifKey}
+---
 
-  ${status(result)}
+${status(artdatabankenResult)}
 
-  ## Växtplats
+## Växtplats
 
-  ${landscapeTypes(result)}
+${landscapeTypes(artdatabankenResult)}
   `);
 }
 
