@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.mjs",
+  "bin": {
+    "fetch": "./fetch.mjs"
+  },
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node --experimental-modules index.mjs"
   },
   "engines": {
     "node": ">=11.14.0"
@@ -17,5 +21,8 @@
     "örter"
   ],
   "author": "Jeremy Karlsson <karlsson@jeremy.se> (https://jeremy.se)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^7.0.0"
+  }
 }
