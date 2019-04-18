@@ -6,12 +6,16 @@
   "scripts": {
     "test": "npm test"
   },
+  "engines": {
+    "node": ">=11.14.0"
+  },
+  "repository": "github:enjikaka/ritagras",
   "keywords": [
     "artdatabanken",
     "herbs",
     "gbif",
     "örter"
   ],
-  "author": "Jeremy Karlsson <karlsson@jeremy.se>",
+  "author": "Jeremy Karlsson <karlsson@jeremy.se> (https://jeremy.se)",
   "license": "MIT"
 }
