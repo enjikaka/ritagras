@@ -1,0 +1,17 @@
+{
+  "name": "ritagras",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "artdatabanken",
+    "herbs",
+    "gbif",
+    "örter"
+  ],
+  "author": "Jeremy Karlsson <karlsson@jeremy.se>",
+  "license": "MIT"
+}
