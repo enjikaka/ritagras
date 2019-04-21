@@ -26,6 +26,8 @@ export default class ArtdatabankenAPI {
 
     const json = await this.get(url);
 
+    console.log(JSON.stringify(json, null, 4));
+
     return json[0].taxonId;
   }
 

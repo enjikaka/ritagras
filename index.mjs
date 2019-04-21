@@ -13,12 +13,19 @@ if (dotenvResult.error) {
 const artdatabankenApi = new ArtdatabankenAPI(process.env.ARTDATABANKEN_API_KEY);
 
 async function init() {
-  const scientificName = 'Achillea millefolium';
+  const scientificName = process.env.SCIENTIFIC_NAME || process.argv.slice(2, 4).join(' ');
+
+  if (!scientificName) {
+    throw new ReferenceError('You need to pass a scientific name via SCIENTIFIC_NAME env or as first argument in CLI.');
+  }
+
+  console.log(`Genererar markdown-fil för växt ${scientificName}`);
+
   const artdatabankenFetch = artdatabankenApi.speciesInformation(scientificName);
   const gbifFetch = getGBIFIDFromQuery(scientificName);
 
-  const artdatabankenResult = await artdatabankenFetch;
-  const gbifKey = await gbifFetch;
+  let artdatabankenResult = await artdatabankenFetch;
+  let gbifKey = await gbifFetch;
 
   const mdContent = `
 ---
@@ -28,6 +35,8 @@ gbif: ${gbifKey}
 ---
 
 ${status(artdatabankenResult)}
+
+${artdatabankenResult.speciesData.speciesFactText.characteristic}
 
 ## Växtplats
 
@@ -39,4 +48,10 @@ ${landscapeTypes(artdatabankenResult)}
   fs.writeFile(filePath, mdContent, console.error);
 }
 
-init();
+(async () => {
+  try {
+    await init();
+  } catch (error) {
+    console.error(error);
+  }
+})();

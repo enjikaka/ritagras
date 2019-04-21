@@ -1,7 +1,7 @@
 
 function randomItemFromArray(items) {
   return items[Math.floor(Math.random() * items.length)]
-};
+}
 
 function joinArrayWithLanguageSeparator(array) {
   return array.slice(0, -1).join(', ') + ' och ' + array.slice(-1);
@@ -15,6 +15,37 @@ function parseLandscapeOrBiotopeName (landscapeType) {
   }
 
   return lowerCaseName;
+}
+
+/**
+ *
+ * @param {'NE'|'NA'|'DD'|'RE'|'EN'|'CR'|'NT'|'LC'|'VU'} category
+ */
+function redlistCategoryToString (category) {
+  switch (category) {
+    case 'NE':
+      return 'ej bedömd';
+    case 'NA':
+      return 'ej tilllämplig';
+    case 'DD':
+      return 'kunskapsbrist';
+    case 'DD':
+      return 'nära hotad';
+    case 'EN':
+      return 'starkt hotad';
+    case 'CR':
+      return 'akut hotad';
+    case 'RE':
+      return 'nationellt utrotad';
+    case 'VU':
+      return 'sårbar';
+      break;
+
+    case 'LC':
+    default:
+      return 'livskraftig';
+      break;
+  }
 }
 
 /**
@@ -159,7 +190,7 @@ export function status(taxa) {
 
   text = text.replace(/{{swedishName}}/gi, taxa.swedishName);
   text = text.replace(/{{swedishPresence}}/gi, taxa.speciesData.taxonRelatedInformation.swedishPresence.toLowerCase());
-  text = text.replace(/{{redListStatus}}/gi, taxa.speciesData.redlistInfo[0].criterionText.split(' (')[0].split(' ').pop().toLowerCase());
+  text = text.replace(/{{redListStatus}}/gi, redlistCategoryToString(taxa.speciesData.redlistInfo[0].category));
 
   return capitalize(text);
 }
