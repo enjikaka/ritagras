@@ -27,8 +27,7 @@ async function init() {
   let artdatabankenResult = await artdatabankenFetch;
   let gbifKey = await gbifFetch;
 
-  const mdContent = `
----
+  const mdContent = `---
 title: "${capitalize(artdatabankenResult.swedishName)}"
 subtitle: "${artdatabankenResult.scientificName}"
 gbif: ${gbifKey}
