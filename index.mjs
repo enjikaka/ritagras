@@ -39,8 +39,7 @@ ${artdatabankenResult.speciesData.speciesFactText.characteristic}
 
 ## Växtplats
 
-${landscapeTypes(artdatabankenResult)}
-  `;
+${landscapeTypes(artdatabankenResult)}`;
 
   const filePath = `./content/${artdatabankenResult.scientificName.toLowerCase().replace(' ', '-')}.md`;
 
